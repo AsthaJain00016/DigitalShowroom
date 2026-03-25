@@ -2,6 +2,7 @@ import { Product } from "../models/product.model.js";
 import ApiError from "../utils/apiError.js";
 import ApiResponse from "../utils/apiResponse.js";
 import  asyncHandler  from "../utils/asyncHandler.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const createProduct=asyncHandler(async(req,res)=>{
     const {name,price,description,category,stock,isFeatured}=req.body;
@@ -10,7 +11,12 @@ const createProduct=asyncHandler(async(req,res)=>{
         throw new ApiError(400,"All fields such as name, price, description, category, stock, isFeatured are required!")
     }
 
-    const imageUrls=req.files?.map(file=>file.path) || [];
+    const imageUrls=[];
+
+    for (const file of req.files){
+        const result=await uploadOnCloudinary(file.path);
+        imageUrls.push(result.secure_url)
+    }
 
     const product=await Product.create({
         name,
