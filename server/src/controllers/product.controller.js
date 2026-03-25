@@ -32,9 +32,9 @@ const getAllProducts=asyncHandler(async(req,res)=>{
 })
 
 const getSingleProduct=asyncHandler(async(req,res)=>{
-    const {id}=req.params;
+    const {_id}=req.params;
 
-    const product=await Product.findById(id).populate("category")
+    const product=await Product.findById(_id).populate("category")
 
     if(!product){
         throw new ApiError(404,"Product not found")
@@ -44,9 +44,9 @@ const getSingleProduct=asyncHandler(async(req,res)=>{
 })
 
 const updateProduct=asyncHandler(async(req,res)=>{
-    const {id}=req.params;
+    const {_id}=req.params;
 
-    const product=await Product.findById(id);
+    const product=await Product.findById(_id);
 
     if(!product){
         throw new ApiError(404,"Product which is to be updated is not found")
@@ -62,7 +62,7 @@ const updateProduct=asyncHandler(async(req,res)=>{
         updatedData.images=imageUrls
     }
     const updatedProduct= await Product.findByIdAndUpdate(
-        id,
+        _id,
         updatedData,
         {new:true}
     )
@@ -70,9 +70,9 @@ const updateProduct=asyncHandler(async(req,res)=>{
 })
 
 const deleteProduct=asyncHandler(async(req,res)=>{
-    const {id}=req.params;
+    const {_id}=req.params;
 
-    const product=await Product.findById(id)
+    const product=await Product.findById(_id)
 
     if(!product){
         throw new ApiError(404,"Product not found")
