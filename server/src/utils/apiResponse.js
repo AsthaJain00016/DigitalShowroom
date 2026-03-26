@@ -7,4 +7,4 @@ class apiResponse{
     }
 }
 
-export default ApiResponse
+export default apiResponse
