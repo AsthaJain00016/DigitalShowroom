@@ -1,15 +1,16 @@
-import express from "express"
-import mongoose from "mongoose"
-import cors from "cors"
-import dotenv from "dotenv"
+import dotenv from 'dotenv'
+dotenv.config({path:'./.env'})
 
-dotenv.config()
+import {app} from './app.js'
+import connectDB from './db/index.js'
 
-const app=express()
 
-app.use(cors())
-app.use(express.json())
-
-app.listen(8000,()=>{
-    console.log("Server is running on Port 8000")
+connectDB()
+.then(()=>{
+    app.listen(process.env.PORT || 5000,()=>{
+        console.log(`Server is running on port ${process.env.PORT || 5000}`)
+    })
+})
+.catch((error)=>{
+    console.log(`Error: MongoDB connection failed ${error}`)
 })
