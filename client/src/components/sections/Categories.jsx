@@ -1,0 +1,127 @@
+const categories=[
+    {
+        name:"Saree",
+        image:"https://th.bing.com/th/id/OIP.Nvk5xzztG8w4c43EFCp14AHaJ4?w=188&h=251&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
+    },
+    {
+        name:"Suits",
+        image:"https://tse3.mm.bing.net/th/id/OIP.N2NZ1IJaOEqTN2a55FcFfgHaKU?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        name:"Chunnis",
+        image:"https://th.bing.com/th/id/OIP.BsmXjyDdlEoBMV-Xs1GspwHaJ3?w=155&h=204&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
+    },
+    {
+        name:"Blouses",
+        image:"https://tse4.mm.bing.net/th/id/OIP.FlNCJPVUnujPKyAOQReSzwHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        name:"Saree",
+        image:"https://th.bing.com/th/id/OIP.Nvk5xzztG8w4c43EFCp14AHaJ4?w=188&h=251&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
+    },
+    {
+        name:"Suits",
+        image:"https://tse3.mm.bing.net/th/id/OIP.N2NZ1IJaOEqTN2a55FcFfgHaKU?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        name:"Chunnis",
+        image:"https://th.bing.com/th/id/OIP.BsmXjyDdlEoBMV-Xs1GspwHaJ3?w=155&h=204&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
+    },
+    {
+        name:"Blouses",
+        image:"https://tse4.mm.bing.net/th/id/OIP.FlNCJPVUnujPKyAOQReSzwHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        name:"Saree",
+        image:"https://th.bing.com/th/id/OIP.Nvk5xzztG8w4c43EFCp14AHaJ4?w=188&h=251&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
+    },
+    {
+        name:"Suits",
+        image:"https://tse3.mm.bing.net/th/id/OIP.N2NZ1IJaOEqTN2a55FcFfgHaKU?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        name:"Chunnis",
+        image:"https://th.bing.com/th/id/OIP.BsmXjyDdlEoBMV-Xs1GspwHaJ3?w=155&h=204&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
+    },
+    {
+        name:"Blouses",
+        image:"https://tse4.mm.bing.net/th/id/OIP.FlNCJPVUnujPKyAOQReSzwHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
+    }
+]
+import { useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const Categories = () => {
+  const scrollRef = useRef();
+
+  const scrollLeft = () => {
+    scrollRef.current.scrollBy({
+      left: -200,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current.scrollBy({
+      left: 200,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <section className="py-10 px-4 md:px-10 bg-white relative">
+
+      {/* Heading */}
+      <h2 className="text-2xl md:text-3xl font-semibold text-center text-gray-800 mb-8">
+        Shop by Category
+      </h2>
+
+      {/* 🔥 LEFT ARROW (desktop only) */}
+      <button
+        onClick={scrollLeft}
+        className="hidden md:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10 hover:scale-110 transition"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      {/* 🔥 RIGHT ARROW */}
+      <button
+        onClick={scrollRight}
+        className="hidden md:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10 hover:scale-110 transition"
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      {/* SCROLL CONTAINER */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+      >
+        {categories.map((cat, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center min-w-25 md:min-w-35 cursor-pointer"
+          > 
+            {/* Circle */}
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-md hover:scale-105  transition duration-300">
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Name */}
+            <p className="mt-3 text-sm md:text-base font-medium text-gray-700">
+              {cat.name}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Categories;
+
+
