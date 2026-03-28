@@ -7,6 +7,7 @@ import Footer from "./components/sections/Footer"
 import Hero from "./components/sections/Hero"
 import ProductGrid from "./components/sections/ProductGrid"
 import VisitShop from "./components/sections/VisitShop"
+
 function App() {
 
   return (
@@ -19,6 +20,7 @@ function App() {
     <VisitShop/>
     <Contact/>
     <Footer/>
+
     </>
     
   )
