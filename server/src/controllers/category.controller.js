@@ -2,10 +2,10 @@ import { Category } from "../models/category.model.js";
 import ApiError from "../utils/apiError.js";
 import ApiResponse from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const createCategory=asyncHandler(async(req,res)=>{
     const {name}=req.body;
-
     if(!name){
         throw new ApiError(400,"Name of the category is required")
     }
@@ -13,7 +13,16 @@ const createCategory=asyncHandler(async(req,res)=>{
     if(existing){
         throw new ApiError(400,"This category already exists")
     }
-    const category=await Category.create({name})
+    if(!req.file){
+        throw new ApiError(400,"Category image is required")
+    }
+    const result=await uploadOnCloudinary(req.file.path)
+    if(!result || !result.secure_url){
+        throw new ApiError(500,"Image Upload failed")
+    }
+
+    
+    const category=await Category.create({name,image:result.secure_url})
 
     return res.status(201).json(new ApiResponse(201,category,"Category created successfully!"))
 })

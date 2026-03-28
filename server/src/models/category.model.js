@@ -7,6 +7,11 @@ const categorySchema=new Schema({
         unique:true,
         lowercase:true,
         trim:true
+    },
+    image:{
+        type:String,
+        required:true,
+        trim:TransformStreamDefaultController
     }
 },
 {
