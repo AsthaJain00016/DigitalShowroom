@@ -1,14 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getSingleProduct } from "../api/productApi";
 
 const ProductDetail = () => {
+  const { id } = useParams(); // 🔥 product id
 
-  const images = [
-    "https://cdn.pixabay.com/photo/2022/11/20/06/31/woman-7603569_1280.jpg",
-    "https://thechhavi.in/wp-content/uploads/2023/01/74b02cf9138262547f80321e3e9ca60c.jpg.webp",
-    "https://wallpaperbat.com/img/6566775-golden-silk-saree-hd-phone-wallpaper.jpg",
-  ];
+  const [product, setProduct] = useState(null);
+  const [activeImage, setActiveImage] = useState("");
 
-  const [activeImage, setActiveImage] = useState(images[0]);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const data = await getSingleProduct(id);
+        setProduct(data);
+
+        // 🔥 handle images
+        if (data.images && data.images.length > 0) {
+          setActiveImage(data.images[0]);
+        } else {
+          setActiveImage(data.image);
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  // 🔥 Loading state
+  if (!product) {
+    return <p className="text-center mt-10">Loading...</p>;
+  }
+
+  const images = product.images?.length ? product.images : [product.image];
 
   return (
     <div className="px-4 md:px-10 py-10 bg-white">
@@ -22,7 +48,7 @@ const ProductDetail = () => {
           <div className="w-full h-100 md:h-125 rounded-xl overflow-hidden shadow-md">
             <img
               src={activeImage}
-              alt="Product"
+              alt={product.name}
               className="w-full h-full object-cover transition duration-300"
             />
           </div>
@@ -56,15 +82,15 @@ const ProductDetail = () => {
         <div className="flex-1">
 
           <h1 className="text-2xl md:text-3xl font-semibold text-gray-800">
-            Banarasi Silk Saree
+            {product.name}
           </h1>
 
           <p className="mt-2 text-xl text-red-800 font-bold">
-            ₹3,499
+            ₹{product.price}
           </p>
 
           <p className="mt-4 text-gray-600">
-            Premium silk saree perfect for weddings and festive occasions.
+            {product.description}
           </p>
 
           <p className="mt-3 text-sm text-gray-500 italic">
@@ -75,7 +101,7 @@ const ProductDetail = () => {
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
 
             <a
-              href="tel:+919876543210"
+              href="tel:+919690473865"
               className="px-6 py-3 bg-red-800 text-white rounded-md text-center"
             >
               📞 Call Now

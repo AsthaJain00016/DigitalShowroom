@@ -32,7 +32,10 @@ const createProduct=asyncHandler(async(req,res)=>{
 })
 
 const getAllProducts=asyncHandler(async(req,res)=>{
-    const product=await Product.find().populate("category");
+    const product=await Product
+    .find()
+    .sort({createdAt:-1})
+    .populate("category");
 
     return res.status(200).json(new ApiResponse(200,product,"All products fetched successfully!"))
 })
@@ -89,10 +92,21 @@ const deleteProduct=asyncHandler(async(req,res)=>{
     return res.status(200).json(new ApiResponse(200,null,"Product deleted successfully!"))
 })
 
+const getProductByCategory=asyncHandler(async(req,res)=>{
+    const {categoryId}=req.params
+
+    const products=await Product.find({
+        category:categoryId
+    }).sort({createdAt:-1})
+
+    return res.status(200).json(new ApiResponse(200,products,"Products by category fetched successfully "))
+})
+
 export {
     createProduct,
     getAllProducts,
     getSingleProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductByCategory
 }

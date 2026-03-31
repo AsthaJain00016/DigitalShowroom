@@ -1,58 +1,23 @@
-const categories=[
-    {
-        name:"Saree",
-        image:"https://th.bing.com/th/id/OIP.Nvk5xzztG8w4c43EFCp14AHaJ4?w=188&h=251&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
-    },
-    {
-        name:"Suits",
-        image:"https://tse3.mm.bing.net/th/id/OIP.N2NZ1IJaOEqTN2a55FcFfgHaKU?rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        name:"Chunnis",
-        image:"https://th.bing.com/th/id/OIP.BsmXjyDdlEoBMV-Xs1GspwHaJ3?w=155&h=204&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
-    },
-    {
-        name:"Blouses",
-        image:"https://tse4.mm.bing.net/th/id/OIP.FlNCJPVUnujPKyAOQReSzwHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        name:"Saree",
-        image:"https://th.bing.com/th/id/OIP.Nvk5xzztG8w4c43EFCp14AHaJ4?w=188&h=251&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
-    },
-    {
-        name:"Suits",
-        image:"https://tse3.mm.bing.net/th/id/OIP.N2NZ1IJaOEqTN2a55FcFfgHaKU?rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        name:"Chunnis",
-        image:"https://th.bing.com/th/id/OIP.BsmXjyDdlEoBMV-Xs1GspwHaJ3?w=155&h=204&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
-    },
-    {
-        name:"Blouses",
-        image:"https://tse4.mm.bing.net/th/id/OIP.FlNCJPVUnujPKyAOQReSzwHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        name:"Saree",
-        image:"https://th.bing.com/th/id/OIP.Nvk5xzztG8w4c43EFCp14AHaJ4?w=188&h=251&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
-    },
-    {
-        name:"Suits",
-        image:"https://tse3.mm.bing.net/th/id/OIP.N2NZ1IJaOEqTN2a55FcFfgHaKU?rs=1&pid=ImgDetMain&o=7&rm=3"
-    },
-    {
-        name:"Chunnis",
-        image:"https://th.bing.com/th/id/OIP.BsmXjyDdlEoBMV-Xs1GspwHaJ3?w=155&h=204&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"
-    },
-    {
-        name:"Blouses",
-        image:"https://tse4.mm.bing.net/th/id/OIP.FlNCJPVUnujPKyAOQReSzwHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
-    }
-]
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getAllCategories } from "../../api/category.api";
 
 const Categories = () => {
   const scrollRef = useRef();
+  const [categories,setCategories]=useState([])
+
+  useEffect(()=>{
+    const fetchCategories=async()=>{
+      try{
+        const data=await getAllCategories();
+        setCategories(data)
+      }catch(err){
+        console.error("Error occurred while fetching categories",err)
+      }
+
+      fetchCategories()
+    }
+  },[])
 
   const scrollLeft = () => {
     scrollRef.current.scrollBy({
