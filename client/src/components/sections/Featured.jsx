@@ -1,33 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getFeaturedProduct } from "../../api/product.api";
 
-
-const featured = [
-    {
-        name: "Silk Saree",
-        image: "https://img.freepik.com/premium-photo/silk-saree-fabric-texture-design-closeup-created-with-generative-ai_419341-13727.jpg?w=2000"
-    },
-    {
-        name: "Blouse",
-        image: "https://www.pinkvilla.com/images/2023-06/1686074831_shutterstock_2161893013.jpg"
-    },
-    {
-        name: "Silk Saree",
-        image: "https://img.freepik.com/premium-photo/silk-saree-fabric-texture-design-closeup-created-with-generative-ai_419341-13727.jpg?w=2000"
-    },
-    {
-        name: "Blouse",
-        image: "https://www.pinkvilla.com/images/2023-06/1686074831_shutterstock_2161893013.jpg"
-    },
-    {
-        name: "Silk Saree",
-        image: "https://img.freepik.com/premium-photo/silk-saree-fabric-texture-design-closeup-created-with-generative-ai_419341-13727.jpg?w=2000"
-    },
-    {
-        name: "Blouse",
-        image: "https://www.pinkvilla.com/images/2023-06/1686074831_shutterstock_2161893013.jpg"
-    }
-]
 
 
 const Featured = () => {
@@ -41,8 +15,22 @@ const Featured = () => {
         scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
     };
 
+    const [products, setProduct] = useState([])
+    
+        useEffect(() => {
+            const fetchProduct = async () => {
+                try {
+                    const data = await getFeaturedProduct()
+                    setProduct(data)
+                } catch (err) {
+                    console.log("Error while fecthing featured peoducts", err)
+                }
+                fetchProduct()
+            }
+        },[])
+
     return (
-        <section className="py-12 px-4 md:px-10 bg-gray-50 relative">
+        <section className="py-12 px-4 md:px-10 bg-gray-50 relative" id="Featured">
 
             {/* Heading */}
             <h2 className="text-2xl md:text-3xl font-semibold text-center text-gray-800 mb-8">
@@ -70,7 +58,7 @@ const Featured = () => {
                 ref={scrollRef}
                 className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
             >
-                {featured.map((item, index) => (
+                {products.map((item, index) => (
                     <div
                         key={index}
                         className="min-w-55 md:min-w-75 bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 cursor-pointer"
@@ -89,6 +77,9 @@ const Featured = () => {
                         <div className="p-4">
                             <h3 className="text-lg font-medium text-center text-gray-800">
                                 {item.name}
+                            </h3>
+                            <h3 className="text-lg font-medium text-center text-gray-800">
+                                ₹{item.price}
                             </h3>
                         </div>
 

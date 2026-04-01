@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="hidden md:flex gap-6 text-gray-700 font-medium">
           <a href="#Home" className="hover:text-red-800">Home</a>
           <a href="#Collections" className="hover:text-red-800">Collections</a>
-          <a onClick={()=>navigate("/featured")} className="hover:text-red-800">Featured Collection</a>
+          <a href="#Featured" className="hover:text-red-800">Featured Collection</a>
           <a onClick={()=>navigate("/sale")} className="hover:text-red-800">Sale</a>
           <a href="#Contact" className="hover:text-red-800">Contact</a>
         </div>
@@ -75,12 +75,13 @@ const Navbar = () => {
             Collections
           </a>
           <a
-            
-            onClick={() => navigate(`/featured`)}
+            href="#Featured"
+            onClick={() => setIsOpen(false)}
             className="hover:text-red-800 transition duration-200"
           >
-           Featured  Collections
+            Featured Collections
           </a>
+        
 
           <a
             onClick={() => navigate(`/sale`)}
