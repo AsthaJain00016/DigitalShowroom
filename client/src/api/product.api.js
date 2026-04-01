@@ -36,3 +36,14 @@ export const getProductByCategory=async(categoryId)=>{
 
     return res.data.products
 }
+
+export const getFeaturedProduct=async()=>{
+    const res=await api.get(`/product/featured`)
+
+    return res.data.products
+}
+export const getSaleProduct=async()=>{
+    const res=await api.get(`/product/sale`)
+
+    return res.data.products
+}

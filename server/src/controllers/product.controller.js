@@ -102,11 +102,24 @@ const getProductByCategory=asyncHandler(async(req,res)=>{
     return res.status(200).json(new ApiResponse(200,products,"Products by category fetched successfully "))
 })
 
+const getFeaturedProduct=asyncHandler(async(req,res)=>{
+    const products=(await Product.find({isFeatured:true})).sort({createdAt:-1})
+
+    return res.status(200).json(new ApiResponse(200,products,"Featured Products fetched successfully"))
+})
+const getSaleProduct=asyncHandler(async(req,res)=>{
+    const products=(await Product.find({isOnSale:true})).sort({createdAt:-1})
+
+    return res.status(200).json(new ApiResponse(200,products,"Featured Products fetched successfully"))
+})
+
 export {
     createProduct,
     getAllProducts,
     getSingleProduct,
     updateProduct,
     deleteProduct,
-    getProductByCategory
+    getProductByCategory,
+    getFeaturedProduct,
+    getSaleProduct
 }

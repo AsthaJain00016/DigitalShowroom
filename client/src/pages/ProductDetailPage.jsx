@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleProduct } from "../api/productApi";
+import { getSingleProduct } from "../api/product.api.js";
 
 const ProductDetail = () => {
   const { id } = useParams(); // 🔥 product id

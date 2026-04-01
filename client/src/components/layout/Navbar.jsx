@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Menu, Search, X } from "lucide-react";
+import {useNavigate} from "react-router-dom"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate=useNavigate()
   return (
+    
     <nav className="bg-white shadow-md sticky top-0 z-50">
 
       {/* TOP BAR */}
@@ -21,7 +23,8 @@ const Navbar = () => {
         <div className="hidden md:flex gap-6 text-gray-700 font-medium">
           <a href="#Home" className="hover:text-red-800">Home</a>
           <a href="#Collections" className="hover:text-red-800">Collections</a>
-          <a href="#Sale" className="hover:text-red-800">Sale</a>
+          <a onClick={()=>navigate("/featured")} className="hover:text-red-800">Featured Collection</a>
+          <a onClick={()=>navigate("/sale")} className="hover:text-red-800">Sale</a>
           <a href="#Contact" className="hover:text-red-800">Contact</a>
         </div>
 
@@ -71,10 +74,16 @@ const Navbar = () => {
           >
             Collections
           </a>
+          <a
+            
+            onClick={() => navigate(`/featured`)}
+            className="hover:text-red-800 transition duration-200"
+          >
+           Featured  Collections
+          </a>
 
           <a
-            href="#Sale"
-            onClick={() => setIsOpen(false)}
+            onClick={() => navigate(`/sale`)}
             className="hover:text-red-800 transition duration-200"
           >
             Sale

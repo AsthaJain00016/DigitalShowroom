@@ -11,12 +11,12 @@ const Categories = () => {
       try{
         const data=await getAllCategories();
         setCategories(data)
+        console.log("Categories fetched", data)
       }catch(err){
         console.error("Error occurred while fetching categories",err)
       }
-
-      fetchCategories()
     }
+    fetchCategories()
   },[])
 
   const scrollLeft = () => {

@@ -33,6 +33,13 @@
         isFeatured:{
             type:Boolean,
             default:false
+        },
+        isOnSale:{
+            type:Boolean,
+            default:false
+        },
+        discountPrice:{
+            type:Number
         }
     },
     {

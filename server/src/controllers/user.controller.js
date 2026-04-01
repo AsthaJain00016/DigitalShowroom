@@ -63,10 +63,14 @@ const loginUser=asyncHandler(async(req,res)=>{
 
     user.password=undefined;
 
-    return res.status(200).json(new ApiResponse(200,{
-        user,
-        token
-    }, "Login successfully"))
+    return res.status(200)
+    .cookie("token",token,{
+        httpOnly:true,
+        secure:false
+    })
+    .json(new ApiResponse(200,
+        {user}
+    , "Login successfully"))
 
 
 })

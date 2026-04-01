@@ -1,28 +1,25 @@
+import { Route,Routes } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/sections/Footer";
+import Home from "./pages/Home";
+import CategoryPage from "./pages/CategoryPage";
+import ProductDetail from "./pages/ProductDetailPage";
+import FeaturedPage from "./pages/FeaturedPage";
+import SalePage from "./pages/SalePage";
 
-import Navbar from "./components/layout/Navbar"
-import Categories from "./components/sections/Categories"
-import Contact from "./components/sections/Contact"
-import Featured from "./components/sections/Featured"
-import Footer from "./components/sections/Footer"
-import Hero from "./components/sections/Hero"
-import ProductGrid from "./components/sections/ProductGrid"
-import VisitShop from "./components/sections/VisitShop"
-
-function App() {
-
-  return (
+function App(){
+  return(
     <>
     <Navbar/>
-    <Hero/>
-    <Categories/>
-    <Featured/>
-    <ProductGrid/>
-    <VisitShop/>
-    <Contact/>
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/category/:id" element={<CategoryPage/>} />
+      <Route path="product/:id" element={<ProductDetail/>} />
+      <Route path="/featured" element={<FeaturedPage/>} />
+      <Route path="/sale" element={<SalePage/>} />
+    </Routes>
     <Footer/>
-
     </>
-    
   )
 }
 
