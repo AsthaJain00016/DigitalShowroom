@@ -5,24 +5,24 @@ export const createProduct=async(formdata)=>{
         withCredentials:true
     })
 
-    return res.data.product
+    return res.data.data
 }
 
 export const getAllProducts=async()=>{
     const res=await api.get(`/product`)
-    return res.data.product
+    return res.data.data
 }
 
 export const getSingleProduct=async(id)=>{
     const res=await api.get(`/product/${id}`)
-    return res.data.product
+    return res.data.data
 }
 
 export const updateProduct=async(id)=>{
     const res=await api.patch(`/product/${id}`,{
         withCredentials:true
     })
-    return res.data.updatedProduct
+    return res.data.data
 }
 export const deleteProduct=async(id)=>{
     const res=await api.delete(`/product/${id}`,{
@@ -34,16 +34,16 @@ export const deleteProduct=async(id)=>{
 export const getProductByCategory=async(categoryId)=>{
     const res=await api.get(`/product/category/${categoryId}`)
 
-    return res.data.products
+    return res.data.data
 }
 
 export const getFeaturedProduct=async()=>{
     const res=await api.get(`/product/featured`)
 
-    return res.data.products
+    return res.data.data
 }
 export const getSaleProduct=async()=>{
     const res=await api.get(`/product/sale`)
 
-    return res.data.products
+    return res.data.data
 }

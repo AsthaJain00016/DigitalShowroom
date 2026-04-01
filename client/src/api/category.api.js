@@ -4,7 +4,7 @@
         const res=await api.post(`/category`,formData,{
             withCredentials:true
         })
-        return res.data.category
+        return res.data.data
     }
 
     export const getAllCategories=async()=>{
@@ -15,14 +15,14 @@
 
     export const getSingleCategory=async(id)=>{
         const res=await api.get(`/category/${id}`)
-        return res.data.category
+        return res.data.data
     }
 
     export const updateCategory=async(id)=>{
         const res=await api.patch(`/category/${id}`,{
             withCredentials:true
         })
-        return res.data.updatedCategory
+        return res.data.data
     }
 
     export const deleteCategory=async(id)=>{
