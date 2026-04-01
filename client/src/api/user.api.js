@@ -10,7 +10,7 @@ export const registerUser=async(formData)=>{
 }
 
 export const loginUser= async(payload)=>{
-   const res= await api.post(`/users/login`,payload)
+   const res= await api.post(`/users/login`,payload,{withCredentials:true})
    return res.data.data
 }
 
@@ -22,7 +22,8 @@ export const getCurrentUser=async()=>{
 }
 
 export const logout=async()=>{
-    return res=await api.post(`/users/logout`,{},{
+    const res = await api.post(`/users/logout`,{}, {
         withCredentials:true
     })
+    return res.data
 }

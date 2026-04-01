@@ -8,13 +8,12 @@ const SalePage = () => {
          const fetchProduct = async () => {
              try {
                  const data = await getSaleProduct()
-                 setProduct(data)
+                 setProducts(data)
              } catch (err) {
-                 console.log("Error while fecthing featured peoducts", err)
+                 console.log("Error while fetching sale products", err)
              }
-             fetchProduct()
          }
- 
+         fetchProduct()
      }, [])
   return (
     <div className="px-4 md:px-10 py-10">

@@ -16,9 +16,8 @@ const ProductGrid = () => {
       catch(err){
         console.error("Error occurred while fetching products",err)
       }
-
-      fetchProducts()
     }
+    fetchProducts()
   },[])
   return (
     <section id="Collections" className="py-12 px-4 md:px-10 bg-white">

@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 const Hero = () => {
   return (
     <section id="Home" className="relative w-full h-[90vh] overflow-hidden">
@@ -17,35 +15,18 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center items-center md:items-start text-center md:text-left h-full px-6 md:px-16 text-white">
 
-        {/* Heading Animation */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl md:text-6xl font-bold leading-tight"
-        >
-          Timeless Elegance
-        </motion.h1>
+        {/* Heading */}
+        <h1 className="text-3xl md:text-6xl font-bold leading-tight">Timeless Elegance</h1>
 
-        {/* Subtext Animation */}
-        <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="mt-4 text-sm md:text-lg max-w-md text-gray-200"
-        >
-          Discover the finest collection of sarees, suits, blouses etc. . . .
-        </motion.p>
+        {/* Subtext */}
+        <p className="mt-4 text-sm md:text-lg max-w-md text-gray-200">
+          Discover the finest collection of sarees, suits, blouses etc.
+        </p>
 
-        {/* Button Animation */}
-        <motion.button
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.4 }}
-          className="mt-6 px-7 py-3 bg-red-800 hover:bg-red-900 hover:scale-105 transition-all duration-300 text-white rounded-md shadow-lg"
-        >
+        {/* Button */}
+        <button className="mt-6 px-7 py-3 bg-red-800 hover:bg-red-900 hover:scale-105 transition-all duration-300 text-white rounded-md shadow-lg">
           Explore Collection
-        </motion.button>
+        </button>
 
       </div>
     </section>

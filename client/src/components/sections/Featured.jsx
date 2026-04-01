@@ -23,10 +23,10 @@ const Featured = () => {
                     const data = await getFeaturedProduct()
                     setProduct(data)
                 } catch (err) {
-                    console.log("Error while fecthing featured peoducts", err)
+                    console.log("Error while fetching featured products", err)
                 }
-                fetchProduct()
-            }
+            };
+            fetchProduct();
         },[])
 
     return (

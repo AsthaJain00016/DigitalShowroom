@@ -13,14 +13,17 @@ const CategoryPage=()=>{
     useEffect(()=>{
         const fetchProduct=async()=>{
             try{    
-                const data=await getProductByCategory()
+                const data=await getProductByCategory(id)
                 setProducts(data)
+
+                if (data.length>0) {
+                    setCategory(data[0]?.category || {})
+                }
             }catch(err){
                 console.error("Error occured while fetching products by category",err)
             }
-
-            fetchProduct()
         }
+        fetchProduct()
     },[id])
 
     return(

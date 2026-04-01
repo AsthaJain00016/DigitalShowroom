@@ -11,7 +11,7 @@ router.route("/")
 
 router.route("/:id")
 .get(getSingleCategory)
-.patch(verifyJWT,verifyAdmin,updateCategory)
+.patch(verifyJWT,verifyAdmin,upload.single("image"),updateCategory)
 .delete(verifyJWT,verifyAdmin,deleteCategory)
 
 export default router

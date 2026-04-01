@@ -52,7 +52,17 @@ const updateCategory=asyncHandler(async(req,res)=>{
     if(!category){
         throw new ApiError(404,"Category not found")
     }
-    const updatedData=req.body
+
+    const updatedData = {...req.body};
+
+    if (req.file) {
+        const result = await uploadOnCloudinary(req.file.path);
+        if (!result || !result.secure_url) {
+            throw new ApiError(500, "Image upload failed");
+        }
+        updatedData.image = result.secure_url;
+    }
+
     const updatedCategory=await Category.findByIdAndUpdate(
         _id,
         updatedData,

@@ -75,7 +75,7 @@ const updateProduct=asyncHandler(async(req,res)=>{
         updatedData,
         {new:true}
     )
-    return res.status.json(new ApiResponse(200,updatedProduct,"Product updated successfully!"))
+    return res.status(200).json(new ApiResponse(200,updatedProduct,"Product updated successfully!"))
 })
 
 const deleteProduct=asyncHandler(async(req,res)=>{

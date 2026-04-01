@@ -18,9 +18,10 @@
         return res.data.data
     }
 
-    export const updateCategory=async(id)=>{
-        const res=await api.patch(`/category/${id}`,{
-            withCredentials:true
+    export const updateCategory=async(id, formData)=>{
+        const res=await api.patch(`/category/${id}`, formData, {
+            withCredentials:true,
+            headers:{"Content-Type":"multipart/form-data"}
         })
         return res.data.data
     }

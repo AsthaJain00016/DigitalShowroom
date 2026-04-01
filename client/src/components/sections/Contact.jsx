@@ -59,7 +59,7 @@ const Contact = () => {
           </p>
 
           <p className="mt-2 text-gray-700 font-medium">
-            📞 +91 9876543210
+            📞 +91 9690473865
           </p>
 
           <p className="mt-2 text-gray-700 font-medium">

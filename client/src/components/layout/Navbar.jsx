@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { Menu, Search, X } from "lucide-react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const { isAdmin, user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
+
   return (
     
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -21,11 +29,14 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 text-gray-700 font-medium">
-          <a href="#Home" className="hover:text-red-800">Home</a>
-          <a href="#Collections" className="hover:text-red-800">Collections</a>
-          <a href="#Featured" className="hover:text-red-800">Featured Collection</a>
-          <a onClick={()=>navigate("/sale")} className="hover:text-red-800">Sale</a>
-          <a href="#Contact" className="hover:text-red-800">Contact</a>
+          <button onClick={() => { navigate('/'); window.location.hash = 'Home'; }} className="hover:text-red-800">Home</button>
+          <button onClick={() => { navigate('/'); window.location.hash = 'Collections'; }} className="hover:text-red-800">Collections</button>
+          <button onClick={() => { navigate('/'); window.location.hash = 'Featured'; }} className="hover:text-red-800">Featured Collection</button>
+          <button onClick={()=>navigate('/sale')} className="hover:text-red-800 cursor-pointer">Sale</button>
+          {isAdmin && <button onClick={()=>navigate('/admin')} className="hover:text-red-800 cursor-pointer">Admin</button>}
+          {!user && <button onClick={()=>navigate('/login')} className="hover:text-red-800 cursor-pointer">Login</button>}
+          {user && <button onClick={handleLogout} className="hover:text-red-800 cursor-pointer">Logout</button>}
+          <button onClick={() => { navigate('/'); window.location.hash = 'Contact'; }} className="hover:text-red-800">Contact</button>
         </div>
 
         {/* Search */}
@@ -59,28 +70,37 @@ const Navbar = () => {
         {/* MENU ITEMS */}
         <div className="flex flex-col items-center justify-center gap-8 mt-20 text-xl font-medium text-gray-800">
 
-          <a
-            href="#Home"
-            onClick={() => setIsOpen(false)}
+          <button
+            onClick={() => {
+              navigate('/');
+              window.location.hash = 'Home';
+              setIsOpen(false);
+            }}
             className="hover:text-red-800 transition duration-200"
           >
             Home
-          </a>
+          </button>
 
-          <a
-            href="#Collections"
-            onClick={() => setIsOpen(false)}
+          <button
+            onClick={() => {
+              navigate('/');
+              window.location.hash = 'Collections';
+              setIsOpen(false);
+            }}
             className="hover:text-red-800 transition duration-200"
           >
             Collections
-          </a>
-          <a
-            href="#Featured"
-            onClick={() => setIsOpen(false)}
+          </button>
+          <button
+            onClick={() => {
+              navigate('/');
+              window.location.hash = 'Featured';
+              setIsOpen(false);
+            }}
             className="hover:text-red-800 transition duration-200"
           >
             Featured Collections
-          </a>
+          </button>
         
 
           <a
@@ -89,6 +109,40 @@ const Navbar = () => {
           >
             Sale
           </a>
+
+          {isAdmin && (
+            <a
+              onClick={() => {
+                navigate(`/admin`);
+                setIsOpen(false);
+              }}
+              className="hover:text-red-800 transition duration-200"
+            >
+              Admin
+            </a>
+          )}
+          {!user && (
+            <a
+              onClick={() => {
+                navigate(`/login`);
+                setIsOpen(false);
+              }}
+              className="hover:text-red-800 transition duration-200"
+            >
+              Login
+            </a>
+          )}
+          {user && (
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsOpen(false);
+              }}
+              className="hover:text-red-800 transition duration-200"
+            >
+              Logout
+            </button>
+          )}
 
           <a
             href="#Contact"

@@ -18,9 +18,10 @@ export const getSingleProduct=async(id)=>{
     return res.data.data
 }
 
-export const updateProduct=async(id)=>{
-    const res=await api.patch(`/product/${id}`,{
-        withCredentials:true
+export const updateProduct=async(id, formdata)=>{
+    const res=await api.patch(`/product/${id}`, formdata, {
+        withCredentials:true,
+        headers: { "Content-Type": "multipart/form-data" },
     })
     return res.data.data
 }
