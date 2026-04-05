@@ -5,10 +5,19 @@ import  asyncHandler  from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const createProduct=asyncHandler(async(req,res)=>{
-    const {name,price,description,category,stock,isFeatured}=req.body;
+    const {
+      name,
+      price,
+      description,
+      category,
+      stock,
+      isFeatured,
+      isOnSale,
+      discountPrice,
+    } = req.body;
 
     if(!name || !price || !description || !category){
-        throw new ApiError(400,"All fields such as name, price, description, category, stock, isFeatured are required!")
+        throw new ApiError(400,"All fields such as name, price, description, category are required!")
     }
 
     const imageUrls=[];
@@ -24,7 +33,9 @@ const createProduct=asyncHandler(async(req,res)=>{
         description,
         category,
         stock,
-        isFeatured,
+        isFeatured: ["true", "on", true].includes(isFeatured),
+        isOnSale: ["true", "on", true].includes(isOnSale),
+        discountPrice: Number(discountPrice) || 0,
         images:imageUrls
     })
 
@@ -41,9 +52,9 @@ const getAllProducts=asyncHandler(async(req,res)=>{
 })
 
 const getSingleProduct=asyncHandler(async(req,res)=>{
-    const {_id}=req.params;
+    const {id}=req.params;
 
-    const product=await Product.findById(_id).populate("category")
+    const product=await Product.findById(id).populate("category")
 
     if(!product){
         throw new ApiError(404,"Product not found")
@@ -53,9 +64,9 @@ const getSingleProduct=asyncHandler(async(req,res)=>{
 })
 
 const updateProduct=asyncHandler(async(req,res)=>{
-    const {_id}=req.params;
+    const {id}=req.params;
 
-    const product=await Product.findById(_id);
+    const product=await Product.findById(id);
 
     if(!product){
         throw new ApiError(404,"Product which is to be updated is not found")
@@ -63,15 +74,19 @@ const updateProduct=asyncHandler(async(req,res)=>{
 
     const imageUrls=req.files?.map(file=>file.path)
 
+    const { isFeatured, isOnSale, discountPrice } = req.body;
     const updatedData={
         ...req.body,
+        isFeatured: ["true", "on", true].includes(isFeatured),
+        isOnSale: ["true", "on", true].includes(isOnSale),
+        discountPrice: Number(discountPrice) || undefined,
     }
 
     if(imageUrls && imageUrls.length>0){
         updatedData.images=imageUrls
     }
     const updatedProduct= await Product.findByIdAndUpdate(
-        _id,
+        id,
         updatedData,
         {new:true}
     )
@@ -79,9 +94,9 @@ const updateProduct=asyncHandler(async(req,res)=>{
 })
 
 const deleteProduct=asyncHandler(async(req,res)=>{
-    const {_id}=req.params;
+    const {id}=req.params;
 
-    const product=await Product.findById(_id)
+    const product=await Product.findById(id)
 
     if(!product){
         throw new ApiError(404,"Product not found")
@@ -97,18 +112,20 @@ const getProductByCategory=asyncHandler(async(req,res)=>{
 
     const products=await Product.find({
         category:categoryId
-    }).sort({createdAt:-1})
+    }).sort({createdAt:-1}).populate("category")
 
     return res.status(200).json(new ApiResponse(200,products,"Products by category fetched successfully "))
 })
 
 const getFeaturedProduct=asyncHandler(async(req,res)=>{
-    const products=(await Product.find({isFeatured:true})).sort({createdAt:-1})
+    const products=await Product.find({isFeatured:true}).sort({createdAt:-1})
 
     return res.status(200).json(new ApiResponse(200,products,"Featured Products fetched successfully"))
 })
+
+
 const getSaleProduct=asyncHandler(async(req,res)=>{
-    const products=(await Product.find({isOnSale:true})).sort({createdAt:-1})
+    const products=await Product.find({isOnSale:true}).sort({createdAt:-1})
 
     return res.status(200).json(new ApiResponse(200,products,"Featured Products fetched successfully"))
 })

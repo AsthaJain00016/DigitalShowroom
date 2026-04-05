@@ -18,8 +18,8 @@ const SalePage = () => {
   return (
     <div className="px-4 md:px-10 py-10">
 
-      <h1 className="text-2xl font-semibold mb-6 text-red-800">
-        Sale Products 🔥
+      <h1 className="text-2xl font-semibold mb-6 text-center text-red-800">
+        Sale Products
       </h1>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -34,9 +34,9 @@ const getAllCategories=asyncHandler(async(req,res)=>{
 })
 
 const getSingleCategory=asyncHandler(async(req,res)=>{
-    const {_id}=req.params;
+    const {id}=req.params;
 
-    const category=await Category.findById(_id)
+    const category=await Category.findById(id)
     if(!category){
         throw new ApiError(404,"Category not found!")
     }
@@ -45,9 +45,9 @@ const getSingleCategory=asyncHandler(async(req,res)=>{
 })
 
 const updateCategory=asyncHandler(async(req,res)=>{
-    const {_id}=req.params;
+    const {id}=req.params;
 
-    const category=await Category.findById(_id)
+    const category=await Category.findById(id)
 
     if(!category){
         throw new ApiError(404,"Category not found")
@@ -73,16 +73,16 @@ const updateCategory=asyncHandler(async(req,res)=>{
 })  
 
 const deleteCategory=asyncHandler(async(req,res)=>{
-    const {_id}=req.params;
+    const {id}=req.params;
 
-    const category=await Category.findById(_id)
+    const category=await Category.findById(id)
     if(!category){
         throw new ApiError(404,"Category not found")
     }
 
     await category.deleteOne()
 
-    res.status(200).json(200,null,"Category deleted successfully!")
+    return res.status(200).json(new ApiResponse(200,null,"Category deleted successfully!"))
 
 })
 

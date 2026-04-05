@@ -10,10 +10,13 @@ const CreateEditProductPage = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [stock, setStock] = useState(0);
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [isOnSale, setIsOnSale] = useState(false);
+  const [discountPrice, setDiscountPrice] = useState("");
   const [images, setImages] = useState([]);
   const [preview, setPreview] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -28,10 +31,13 @@ const CreateEditProductPage = () => {
     getSingleProduct(id)
       .then((product) => {
         setName(product.name);
-        setPrice(product.price);
-        setStock(product.stock);
+        setPrice(product.price?.toString() ?? "");
+        setStock(product.stock?.toString() ?? "");
         setCategory(product.category?._id || "");
         setDescription(product.description);
+        setIsFeatured(Boolean(product.isFeatured));
+        setIsOnSale(Boolean(product.isOnSale));
+        setDiscountPrice(product.discountPrice?.toString() ?? "");
         setPreview(product.images || []);
       })
       .catch((err) => console.error(err));
@@ -51,16 +57,25 @@ const CreateEditProductPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!name || !price || !category || !description) return;
+    if (!name || price === "" || !category || !description) return;
 
     setSaving(true);
     try {
+      const numericPrice = parseFloat(price);
+      const numericStock = stock === "" ? 0 : parseInt(stock, 10);
+      const numericDiscount = discountPrice === "" ? 0 : parseFloat(discountPrice);
+
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("price", price);
-      formData.append("stock", stock);
+      formData.append("price", Number.isNaN(numericPrice) ? 0 : numericPrice);
+      formData.append("stock", Number.isNaN(numericStock) ? 0 : numericStock);
       formData.append("category", category);
       formData.append("description", description);
+      formData.append("isFeatured", isFeatured);
+      formData.append("isOnSale", isOnSale);
+      if (discountPrice !== "") {
+        formData.append("discountPrice", Number.isNaN(numericDiscount) ? 0 : numericDiscount);
+      }
       images.forEach((img) => formData.append("images", img));
 
       if (isEdit) {
@@ -106,7 +121,8 @@ const CreateEditProductPage = () => {
               placeholder="Price"
               value={price}
               min={0}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              step="0.01"
+              onChange={(e) => setPrice(e.target.value)}
               required
             />
 
@@ -116,8 +132,38 @@ const CreateEditProductPage = () => {
               placeholder="Stock"
               value={stock}
               min={0}
-              onChange={(e) => setStock(Number(e.target.value))}
+              step="1"
+              onChange={(e) => setStock(e.target.value)}
               required
+            />
+            <div className="flex items-center gap-4">
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={isFeatured}
+                  onChange={(e) => setIsFeatured(e.target.checked)}
+                  className="h-4 w-4"
+                />
+                Featured
+              </label>
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={isOnSale}
+                  onChange={(e) => setIsOnSale(e.target.checked)}
+                  className="h-4 w-4"
+                />
+                On Sale
+              </label>
+            </div>
+            <input
+              type="number"
+              className="rounded-lg border border-gray-200 p-3 focus:ring-2 focus:ring-red-100"
+              placeholder="Discount Price (optional)"
+              value={discountPrice}
+              min={0}
+              step="0.01"
+              onChange={(e) => setDiscountPrice(e.target.value)}
             />
             <select
               className="rounded-lg border border-gray-200 p-3 focus:ring-2 focus:ring-red-100"

@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useEffect,useState } from "react"
 import { getProductByCategory } from "../api/product.api.js"
+import { getSingleCategory } from "../api/category.api.js"
 import { useNavigate } from "react-router-dom"
 
 
@@ -16,8 +17,14 @@ const CategoryPage=()=>{
                 const data=await getProductByCategory(id)
                 setProducts(data)
 
-                if (data.length>0) {
-                    setCategory(data[0]?.category || {})
+                if (data.length > 0) {
+                    const categoryData = data[0]?.category;
+                    if (categoryData && typeof categoryData === "object" && categoryData.name) {
+                        setCategory(categoryData);
+                    } else if (categoryData) {
+                        const fetchedCategory = await getSingleCategory(categoryData);
+                        setCategory(fetchedCategory || {});
+                    }
                 }
             }catch(err){
                 console.error("Error occured while fetching products by category",err)
@@ -30,8 +37,8 @@ const CategoryPage=()=>{
         <div className="bg-white">
             <div className="relative w-full h-[40vh] md:h-[50vh]">
                 <img
-                src={category.image}
-                alt="categorybanner"
+                src={category.image || "https://via.placeholder.com/1200x600?text=No+Category+Image"}
+                alt={category.name || "Category banner"}
                 className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">

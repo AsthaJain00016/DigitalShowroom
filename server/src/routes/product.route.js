@@ -10,13 +10,15 @@ router.route("/")
 .post(verifyJWT,verifyAdmin,upload.array("images",5),createProduct)
 .get(getAllProducts)
 
+
+router.route("/featured").get(getFeaturedProduct)
+router.route("/sale").get(getSaleProduct)
+
+
 router.route("/:id")
 .get(getSingleProduct)
 .patch(verifyJWT,verifyAdmin,upload.array("images",5),updateProduct)
 .delete(verifyJWT,verifyAdmin,deleteProduct)
-
-router.route("/featured").get(getFeaturedProduct)
-router.route("/sale").get(getSaleProduct)
 
 router.route("/category/:categoryId").get(getProductByCategory)
 

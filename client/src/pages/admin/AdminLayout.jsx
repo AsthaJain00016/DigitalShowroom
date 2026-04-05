@@ -83,7 +83,7 @@ const AdminLayout = ({ children }) => {
                 <input
                   type="search"
                   placeholder="Search products, categories..."
-                  className="bg-transparent outline-none min-w-[180px]"
+                  className="bg-transparent outline-none min-w-45"
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { getFeaturedProduct } from "../../api/product.api";
+import { getFeaturedProduct } from "../../api/product.api.js";
 
 
 
@@ -67,7 +67,7 @@ const Featured = () => {
                         {/* Image */}
                         <div className="h-70 md:h-87.5 overflow-hidden">
                             <img
-                                src={item.image}
+                                src={item.images?.[0] || item.image || "https://via.placeholder.com/400x400?text=No+Image"}
                                 alt={item.name}
                                 className="w-full h-full object-cover hover:scale-105 transition duration-300"
                             />

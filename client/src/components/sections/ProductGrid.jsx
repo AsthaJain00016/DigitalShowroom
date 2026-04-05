@@ -40,7 +40,7 @@ const ProductGrid = () => {
             {/* Image */}
             <div className="h-55 overflow-hidden">
               <img
-                src={product.image}
+                src={product.images?.[0] || product.image || "https://via.placeholder.com/400x400?text=No+Image"}
                 alt={product.name}
                 className="w-full h-full object-cover hover:scale-105 transition duration-300"
               />

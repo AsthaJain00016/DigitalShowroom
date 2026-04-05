@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { getAllCategories } from "../../api/category.api";
 
 const Categories = () => {
   const scrollRef = useRef();
+  const navigate = useNavigate();
   const [categories,setCategories]=useState([])
 
   useEffect(()=>{
@@ -65,12 +67,13 @@ const Categories = () => {
         {categories.map((cat, index) => (
           <div
             key={index}
+            onClick={() => navigate(`/category/${cat._id}`)}
             className="flex flex-col items-center min-w-25 md:min-w-35 cursor-pointer"
           > 
             {/* Circle */}
             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-md hover:scale-105  transition duration-300">
               <img
-                src={cat.image}
+                src={cat.image || "https://via.placeholder.com/160x160?text=No+Image"}
                 alt={cat.name}
                 className="w-full h-full object-cover"
               />
