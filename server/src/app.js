@@ -27,9 +27,14 @@ app.use((req,res,next)=>{
 import userRouter from "./routes/user.route.js"
 import categoryRouter from "./routes/category.route.js"
 import productRouter from "./routes/product.route.js"
+import contactRouter from "./routes/contact.route.js"
+import errorHandler from "./middlewares/error.middleware.js"
 
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/category",categoryRouter)
 app.use("/api/v1/product",productRouter)
+app.use("/api/v1/contact",contactRouter)
+
+app.use(errorHandler)
 
 export {app}

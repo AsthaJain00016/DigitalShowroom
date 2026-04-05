@@ -26,6 +26,7 @@ const Footer = () => {
           <ul className="flex flex-col gap-2">
             <li className="hover:text-white cursor-pointer"> <a href="#Home">Home</a> </li>
             <li className="hover:text-white cursor-pointer"><a href="#Collections">Collections</a></li>
+            <li className="hover:text-white cursor-pointer"><a href="#Featured">Featured Collection</a></li>
             <li className="hover:text-white cursor-pointer"><a href="#Sale">Sale</a></li>
             <li className="hover:text-white cursor-pointer"><a href="#Contact">Contact</a></li>
           </ul>
@@ -51,7 +52,7 @@ const Footer = () => {
 
             <p className="flex items-center gap-2">
               <Mail size={16} />
-              vardhmansarees@gmail.com
+              vardhmansareessuits@gmail.com
             </p>
 
           </div>
