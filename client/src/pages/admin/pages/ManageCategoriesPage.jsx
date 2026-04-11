@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import AdminLayout from "../AdminLayout";
+import { useEffect, useMemo, useState } from "react";
+import AdminLayout, { useAdminSearch } from "../AdminLayout";
 import { getAllCategories, createCategory, updateCategory, deleteCategory } from "../../../api/category.api.js";
 import { Trash2, Edit, Plus } from "lucide-react";
 
@@ -9,6 +9,7 @@ const ManageCategoriesPage = () => {
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { search } = useAdminSearch();
 
   const fetchData = async () => {
     try {
@@ -97,9 +98,14 @@ const ManageCategoriesPage = () => {
       </form>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((category) => (
-          <article key={category._id} className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        {categories
+          .filter((category) => {
+            if (!search.trim()) return true;
+            return category.name.toLowerCase().includes(search.toLowerCase().trim());
+          })
+          .map((category) => (
+            <article key={category._id} className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm flex items-center justify-between">
+              <div className="flex items-center gap-3">
               {category.image ? (
                 <img src={category.image} alt={category.name} className="h-12 w-12 rounded-lg object-cover" />
               ) : (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -11,6 +11,13 @@ import {
   X,
 } from "lucide-react";
 
+const AdminSearchContext = createContext({
+  search: "",
+  setSearch: () => {},
+});
+
+export const useAdminSearch = () => useContext(AdminSearchContext);
+
 const menus = [
   { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { name: "Products", path: "/admin/products", icon: Package },
@@ -20,10 +27,12 @@ const menus = [
 
 const AdminLayout = ({ children }) => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800">
+    <AdminSearchContext.Provider value={{ search, setSearch }}>
+      <div className="min-h-screen bg-slate-50 text-slate-800">
       <div className="md:flex">
         <aside
           className={`fixed inset-y-0 left-0 z-30 w-72 bg-white/95 backdrop-blur border-r border-gray-200 shadow-lg transition-transform duration-300 md:static md:translate-x-0 ${
@@ -83,6 +92,8 @@ const AdminLayout = ({ children }) => {
                 <input
                   type="search"
                   placeholder="Search products, categories..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   className="bg-transparent outline-none min-w-45"
                 />
               </div>
@@ -98,7 +109,8 @@ const AdminLayout = ({ children }) => {
           <main className="p-4 sm:p-6">{children}</main>
         </div>
       </div>
-    </div>
+      </div>
+    </AdminSearchContext.Provider>
   );
 };
 

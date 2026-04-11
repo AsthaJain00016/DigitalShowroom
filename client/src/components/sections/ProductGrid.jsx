@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getAllProducts } from "../../api/product.api";
 
-
 const ProductGrid = () => {
-  const [products,setProducts]=useState([])
-  const navigate=useNavigate()
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("q") || "";
+  const normalizedQuery = query.toLowerCase().trim();
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchProducts=async()=>{
       try{
         const data=await getAllProducts()
@@ -30,12 +32,20 @@ const ProductGrid = () => {
       {/* GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-        {products.map((product, index) => (
-          <div
-            key={index}
-            onClick={()=>navigate(`/product/${product._id}`)}
-            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition duration-300 cursor-pointer"
-          >
+        {products
+          .filter((product) => {
+            if (!normalizedQuery) return true;
+            return (
+              product.name.toLowerCase().includes(normalizedQuery) ||
+              (product.category?.name || "").toLowerCase().includes(normalizedQuery)
+            );
+          })
+          .map((product, index) => (
+            <div
+              key={index}
+              onClick={() => navigate(`/product/${product._id}`)}
+              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition duration-300 cursor-pointer"
+            >
 
             {/* Image */}
             <div className="h-55 overflow-hidden">
@@ -52,7 +62,7 @@ const ProductGrid = () => {
                 {product.name}
               </h3>
               <p className="text-red-800 font-semibold mt-1">
-                {product.price}
+                ₹{product.price}
               </p>
             </div>
 

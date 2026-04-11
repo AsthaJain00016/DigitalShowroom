@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import AdminLayout from "../AdminLayout";
+import AdminLayout, { useAdminSearch } from "../AdminLayout";
 import { getAllProducts } from "../../../api/product.api.js";
 import { getAllCategories } from "../../../api/category.api.js";
 import { Package, Layers, Info } from "lucide-react";
@@ -14,6 +14,7 @@ const DashboardPage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { search } = useAdminSearch();
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,6 +43,16 @@ const DashboardPage = () => {
     lowStock,
   };
 
+  const normalizedSearch = search.toLowerCase().trim();
+  const displayedProducts = normalizedSearch
+    ? products.filter((product) => {
+        return (
+          product.name.toLowerCase().includes(normalizedSearch) ||
+          (product.category?.name || "").toLowerCase().includes(normalizedSearch)
+        );
+      })
+    : products;
+
   return (
     <AdminLayout>
       <div className="grid gap-5 md:grid-cols-3 mb-6">
@@ -68,7 +79,7 @@ const DashboardPage = () => {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {loading ? (
             <p className="text-sm text-gray-500">Loading...</p>
-          ) : products.slice(0, 6).map((product) => (
+          ) : displayedProducts.slice(0, 6).map((product) => (
             <div key={product._id} className="flex items-start gap-3 border rounded-xl p-3 hover:border-red-200 transition-colors">
               <img src={product.images?.[0]} alt={product.name} className="h-14 w-14 object-cover rounded-md" />
               <div>
@@ -77,6 +88,9 @@ const DashboardPage = () => {
               </div>
             </div>
           ))}
+          {displayedProducts.length === 0 && !loading && (
+            <p className="text-sm text-gray-500">No recent products match the search.</p>
+          )}
         </div>
       </section>
     </AdminLayout>

@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Menu, Search, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAdmin, user, logout } = useAuth();
 
   const handleLogout = async () => {
@@ -41,7 +44,33 @@ const Navbar = () => {
 
         {/* Search */}
         {!isOpen && (
-          <Search size={24} className="cursor-pointer" />
+          <div className="relative flex items-center gap-2">
+            <Search
+              size={24}
+              className="cursor-pointer"
+              onClick={() => setSearchOpen((prev) => !prev)}
+            />
+            {searchOpen && (
+              <input
+                autoFocus
+                value={searchParams.get("q") || ""}
+                onChange={(e) => {
+                  const q = e.target.value;
+                  if (q) {
+                    setSearchParams({ q });
+                  } else {
+                    setSearchParams({});
+                  }
+                  if (location.pathname !== "/") {
+                    navigate("/");
+                  }
+                }}
+                onBlur={() => setSearchOpen(false)}
+                className="border border-gray-200 rounded-full px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-red-100"
+                placeholder="Search products..."
+              />
+            )}
+          </div>
         )}
 
         {/* Hamburger */}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminLayout from "../AdminLayout";
+import AdminLayout, { useAdminSearch } from "../AdminLayout";
 import { getAllProducts, deleteProduct } from "../../../api/product.api.js";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
 import { useToast } from "../../../components/ui/ToastProvider";
@@ -8,7 +8,7 @@ import { useToast } from "../../../components/ui/ToastProvider";
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [q, setQ] = useState("");
+  const { search, setSearch } = useAdminSearch();
   const [sortBy, setSortBy] = useState("name");
   const [sortDir, setSortDir] = useState("asc");
   const [page, setPage] = useState(1);
@@ -35,7 +35,7 @@ const ManageProducts = () => {
   }, [fetchProducts]);
 
   const filtered = useMemo(() => {
-    const normalized = q.toLowerCase().trim();
+    const normalized = search.toLowerCase().trim();
     const filteredProducts = products.filter((prod) => {
       return (
         prod.name.toLowerCase().includes(normalized) ||
@@ -57,7 +57,7 @@ const ManageProducts = () => {
     });
 
     return sorted;
-  }, [products, q, sortBy, sortDir]);
+  }, [products, search, sortBy, sortDir]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const pageItems = filtered.slice((page - 1) * pageSize, page * pageSize);
@@ -90,10 +90,10 @@ const ManageProducts = () => {
       <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <input
           type="search"
-          value={q}
+          value={search}
           placeholder="Search by name/category"
           onChange={(e) => {
-            setQ(e.target.value);
+            setSearch(e.target.value);
             setPage(1);
           }}
           className="rounded-lg border border-gray-200 px-3 py-2 focus:ring-2 focus:ring-red-100"
