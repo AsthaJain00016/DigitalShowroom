@@ -18,14 +18,14 @@ const Navbar = () => {
 
   return (
     
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-white/95 shadow-sm backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
 
       {/* TOP BAR */}
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
         {/* Logo */}
         {!isOpen && (
-          <h1 className="text-xl font-semibold text-red-800">
+          <h1 className="text-xl md:text-2xl font-semibold tracking-tight text-red-800">
             Vardhman Sarees, Suits and Blouses
           </h1>
         )}
@@ -84,103 +84,116 @@ const Navbar = () => {
 
       {/* 🔥 MOBILE MENU WITH ANIMATION */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-white z-50 
-        transform transition-transform duration-300 ease-in-out
-        ${isOpen ? "translate-y-0" : "-translate-y-full"}`}
+        className={`fixed inset-0 bg-red-50/85 backdrop-blur-sm z-50 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
+        <div className={`absolute inset-x-4 top-16 mx-auto w-[calc(100%-2rem)] max-w-md rounded-[2rem] bg-white/95 border border-red-100 shadow-2xl shadow-red-100/40 p-6 transition-transform duration-300 ${isOpen ? "translate-y-0" : "-translate-y-8"}`}>
 
-        {/* ❌ CLOSE BUTTON (RIGHT SIDE) */}
-        <div className="flex justify-end p-5">
-          <button onClick={() => setIsOpen(false)}>
-            <X size={28} />
-          </button>
-        </div>
-
-        {/* MENU ITEMS */}
-        <div className="flex flex-col items-center justify-center gap-8 mt-20 text-xl font-medium text-gray-800">
-
-          <button
-            onClick={() => {
-              navigate('/');
-              window.location.hash = 'Home';
-              setIsOpen(false);
-            }}
-            className="hover:text-red-800 transition duration-200"
-          >
-            Home
-          </button>
-
-          <button
-            onClick={() => {
-              navigate('/');
-              window.location.hash = 'Collections';
-              setIsOpen(false);
-            }}
-            className="hover:text-red-800 transition duration-200"
-          >
-            Collections
-          </button>
-          <button
-            onClick={() => {
-              navigate('/');
-              window.location.hash = 'Featured';
-              setIsOpen(false);
-            }}
-            className="hover:text-red-800 transition duration-200"
-          >
-            Featured Collections
-          </button>
-        
-
-          <a
-            onClick={() => navigate(`/sale`)}
-            className="hover:text-red-800 transition duration-200"
-          >
-            Sale
-          </a>
-
-          {isAdmin && (
-            <a
-              onClick={() => {
-                navigate(`/admin`);
-                setIsOpen(false);
-              }}
-              className="hover:text-red-800 transition duration-200"
+          {/* HEADER */}
+          <div className="flex items-center justify-between gap-4 rounded-3xl border border-red-100 bg-red-50/90 p-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-red-600">Menu</p>
+              <h2 className="text-lg font-semibold text-red-900">Explore Vardhman</h2>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-red-200 bg-white text-red-700 shadow-sm transition hover:bg-red-100"
             >
-              Admin
-            </a>
-          )}
-          {!user && (
-            <a
-              onClick={() => {
-                navigate(`/login`);
-                setIsOpen(false);
-              }}
-              className="hover:text-red-800 transition duration-200"
-            >
-              Login
-            </a>
-          )}
-          {user && (
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* MENU ITEMS */}
+          <div className="mt-8 grid gap-4">
             <button
               onClick={() => {
-                handleLogout();
+                navigate('/');
+                window.location.hash = 'Home';
                 setIsOpen(false);
               }}
-              className="hover:text-red-800 transition duration-200"
+              className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
             >
-              Logout
+              Home
             </button>
-          )}
 
-          <a
-            href="#Contact"
-            onClick={() => setIsOpen(false)}
-            className="hover:text-red-800 transition duration-200"
-          >
-            Contact
-          </a>
+            <button
+              onClick={() => {
+                navigate('/');
+                window.location.hash = 'Collections';
+                setIsOpen(false);
+              }}
+              className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+            >
+              Collections
+            </button>
 
+            <button
+              onClick={() => {
+                navigate('/');
+                window.location.hash = 'Featured';
+                setIsOpen(false);
+              }}
+              className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+            >
+              Featured Collections
+            </button>
+
+            <button
+              onClick={() => {
+                navigate('/sale');
+                setIsOpen(false);
+              }}
+              className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+            >
+              Sale
+            </button>
+
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  navigate('/admin');
+                  setIsOpen(false);
+                }}
+                className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+              >
+                Admin
+              </button>
+            )}
+
+            {!user && (
+              <button
+                onClick={() => {
+                  navigate('/login');
+                  setIsOpen(false);
+                }}
+                className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+              >
+                Login
+              </button>
+            )}
+
+            {user && (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsOpen(false);
+                }}
+                className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+              >
+                Logout
+              </button>
+            )}
+
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                navigate('/');
+                window.location.hash = 'Contact';
+              }}
+              className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"
+            >
+              Contact
+            </button>
+          </div>
         </div>
       </div>
     </nav>
