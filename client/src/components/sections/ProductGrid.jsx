@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getAllProducts } from "../../api/product.api";
+import { getAllProducts, getFeaturedProduct } from "../../api/product.api";
 
-const ProductGrid = () => {
+const ProductGrid = ({ featuredOnly = false, title = "Our Collection" }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -10,23 +10,22 @@ const ProductGrid = () => {
   const normalizedQuery = query.toLowerCase().trim();
 
   useEffect(() => {
-    const fetchProducts=async()=>{
-      try{
-        const data=await getAllProducts()
-        setProducts(data)
+    const fetchProducts = async () => {
+      try {
+        const data = featuredOnly ? await getFeaturedProduct() : await getAllProducts();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error occurred while fetching products", err);
       }
-      catch(err){
-        console.error("Error occurred while fetching products",err)
-      }
-    }
-    fetchProducts()
-  },[])
+    };
+    fetchProducts();
+  }, [featuredOnly]);
   return (
-    <section id="Collections" className="py-12 px-4 md:px-10 bg-white">
+    <section id={featuredOnly ? "Featured" : "Collections"} className="py-12 px-4 md:px-10 bg-white">
 
       {/* Heading */}
       <h2 className="text-2xl md:text-3xl text-center font-semibold text-gray-800 mb-8">
-        Our Collection
+        {title}
       </h2>
 
       {/* GRID */}

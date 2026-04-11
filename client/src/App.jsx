@@ -11,6 +11,7 @@ import CreateEditProductPage from "./pages/admin/pages/CreateEditProductPage";
 import ManageCategoriesPage from "./pages/admin/pages/ManageCategoriesPage";
 import InventoryPage from "./pages/admin/pages/InventoryPage";
 import LoginPage from "./pages/LoginPage";
+import FeaturedPage from "./pages/FeaturedPage";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ToastProvider } from "./components/ui/ToastProvider";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/category/:id" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/sale" element={<SalePage />} />
+          <Route path="/featured" element={<FeaturedPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Home" element={<Hero/>} />
 

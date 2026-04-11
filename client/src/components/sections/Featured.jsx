@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getFeaturedProduct } from "../../api/product.api.js";
 
@@ -6,6 +7,7 @@ import { getFeaturedProduct } from "../../api/product.api.js";
 
 const Featured = () => {
     const scrollRef = useRef();
+    const navigate = useNavigate();
 
     const scrollLeft = () => {
         scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
@@ -33,9 +35,17 @@ const Featured = () => {
         <section className="py-12 px-4 md:px-10 bg-gray-50 relative" id="Featured">
 
             {/* Heading */}
-            <h2 className="text-2xl md:text-3xl font-semibold text-center text-gray-800 mb-8">
+            <div className="flex flex-col items-center gap-4 mb-8">
+              <h2 className="text-2xl md:text-3xl font-semibold text-center text-gray-800">
                 Featured Collection
-            </h2>
+              </h2>
+              <button
+                onClick={() => navigate('/featured')}
+                className="rounded-full border border-red-800 px-4 py-2 text-sm font-semibold text-red-800 hover:bg-red-50 transition"
+              >
+                View all featured products
+              </button>
+            </div>
 
             {/* LEFT ARROW */}
             <button
@@ -61,6 +71,7 @@ const Featured = () => {
                 {products.map((item, index) => (
                     <div
                         key={index}
+                        onClick={() => navigate(`/product/${item._id}`)}
                         className="min-w-55 md:min-w-75 bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 cursor-pointer"
                     >
 

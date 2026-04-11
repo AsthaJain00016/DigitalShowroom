@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="hidden md:flex gap-6 text-gray-700 font-medium">
           <button onClick={() => { navigate('/'); window.location.hash = 'Home'; }} className="hover:text-red-800">Home</button>
           <button onClick={() => { navigate('/'); window.location.hash = 'Collections'; }} className="hover:text-red-800">Collections</button>
-          <button onClick={() => { navigate('/'); window.location.hash = 'Featured'; }} className="hover:text-red-800">Featured Collection</button>
+          <button onClick={() => navigate('/featured')} className="hover:text-red-800">Featured Collection</button>
           <button onClick={()=>navigate('/sale')} className="hover:text-red-800 cursor-pointer">Sale</button>
           {isAdmin && <button onClick={()=>navigate('/admin')} className="hover:text-red-800 cursor-pointer">Admin</button>}
           {!user && <button onClick={()=>navigate('/login')} className="hover:text-red-800 cursor-pointer">Login</button>}
@@ -128,8 +128,7 @@ const Navbar = () => {
 
             <button
               onClick={() => {
-                navigate('/');
-                window.location.hash = 'Featured';
+                navigate('/featured');
                 setIsOpen(false);
               }}
               className="w-full rounded-3xl border border-gray-200 bg-white px-5 py-4 text-left text-lg font-semibold text-gray-900 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50"

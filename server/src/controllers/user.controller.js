@@ -64,9 +64,10 @@ const loginUser=asyncHandler(async(req,res)=>{
     user.password=undefined;
 
     return res.status(200)
-    .cookie("token",token,{
-        httpOnly:true,
-        secure:false
+    .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
     })
     .json(new ApiResponse(200,
         {user}
@@ -84,7 +85,8 @@ const logoutUser=asyncHandler(async(req,res)=>{
     .status(200)
     .cookie("token", "", {
       httpOnly: true,
-      secure: false,
+      secure: true,
+      sameSite: "none",
       expires: new Date(0),
     })
     .json(new ApiResponse(200, null, "Logout successful"));

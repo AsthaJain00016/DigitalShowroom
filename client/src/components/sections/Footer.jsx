@@ -1,4 +1,5 @@
 import {  Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -24,9 +25,9 @@ const Footer = () => {
           </h3>
 
           <ul className="flex flex-col gap-2">
-            <li className="hover:text-white cursor-pointer"> <a href="#Home">Home</a> </li>
+            <li className="hover:text-white cursor-pointer"> <Link to="/">Home</Link> </li>
             <li className="hover:text-white cursor-pointer"><a href="#Collections">Collections</a></li>
-            <li className="hover:text-white cursor-pointer"><a href="#Featured">Featured Collection</a></li>
+            <li className="hover:text-white cursor-pointer"><Link to="/featured">Featured Collection</Link></li>
             <li className="hover:text-white cursor-pointer"><a href="#Sale">Sale</a></li>
             <li className="hover:text-white cursor-pointer"><a href="#Contact">Contact</a></li>
           </ul>
